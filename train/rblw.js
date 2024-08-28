@@ -3,7 +3,7 @@ const fs = require("fs");
 const player = require('play-sound')(opts = {});
 
 
-async function redbullLargeWaterLogic(){
+async function redbullLargeWaterLogic(stat){
   (async () => {
     const browser = await puppeteer.launch({ 
       headless: false, 
@@ -47,14 +47,14 @@ async function redbullLargeWaterLogic(){
         console.error("The siteMessage element was not found or another error occurred:", error);
       }
 
-      await page.waitForSelector('.quickslot:nth-child(1) input:nth-child(1)', { visible: true });
-      await page.click('.quickslot:nth-child(1) input:nth-child(1)');
+      await page.waitForSelector('.quickslot:nth-child(3) input:nth-child(1)', { visible: true });
+      await page.click('.quickslot:nth-child(3) input:nth-child(1)');
       
-      await page.waitForSelector('.quickslot:nth-child(1) input:nth-child(1)', { visible: true });
-      await page.click('.quickslot:nth-child(1) input:nth-child(1)');
+      await page.waitForSelector('.quickslot:nth-child(3) input:nth-child(1)', { visible: true });
+      await page.click('.quickslot:nth-child(3) input:nth-child(1)');
 
-      await page.waitForSelector('form:nth-child(5) .widebutton', { visible: true });
-      await page.click('form:nth-child(5) .widebutton');
+      await page.waitForSelector(`form:nth-child(${stat}) .widebutton`, { visible: true });
+      await page.click(`form:nth-child(${stat}) .widebutton`);
     }
   })();
 }
