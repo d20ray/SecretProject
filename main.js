@@ -1,18 +1,21 @@
 const readline = require('readline');
 const candyCornLogic = require('./train/cc');
 const redbullLargeWaterLogic = require('./train/rblw');
-const southDakotaCrime = require('./crimeSD/bluntLw');
+const crime = require('./crime/crime');
 const sixPacksLogic = require('./train/sixPacks');
 const paddysPintsLogic = require('./train/pp');
 const greenEggLargeWaterLogic = require('./train/greenEggLw');
+
+let nerve = 0;
+let stam = 0;
+let icu = false;
+let iso = false;
+let prison = "";
 
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
 });
-
-let train = false;
-let crime = false;
 
 const promptUser = (question, callback) => {
   rl.question(question, (answer) => {
@@ -21,8 +24,8 @@ const promptUser = (question, callback) => {
 };
 
 const handleTrainOptions = async () => {
-  const trainOptions = `Press '1' for Candy Corn (slot 3)\nPress '2' for Paddy's Pints (slot 3)\nPress '3' for Red bull & Large Water (rb: 2, lw:3)\nPress '4' for 6 packs (slot 2 & 3)\nPress '5' for Green Eggs & Large Water (Egg: 2, Water: 3)\n`;
   const statOptions = `Press '1' for Strength\nPress '2' for Defence\nPress '3' for Speed\n`;
+  const trainOptions = `Press '1' for Candy Corn (slot 3)\nPress '2' for Paddy's Pints (slot 3)\nPress '3' for Red bull & Large Water (rb: 2, lw:3)\nPress '4' for 6 packs (slot 2 & 3)\nPress '5' for Green Eggs & Large Water (egg: 2, lw: 3)\n`;
 
   let stat;
 
@@ -69,21 +72,82 @@ const handleTrainOptions = async () => {
   });
 }
 
-const handleCrimeOptions = () => {
+const handleCrimeStamOptions = () => {
+  const itemOptions = `Press '1' for Large Water (slot 3)\nPress '2' for Small Water (slot 3)\nPress '3' for 100% stamina item (slot 3)\nPress '4' for 50% stamina item (slot 3)\nPress '5' for 30% stamina item (slot 3)\n`;
+
+  promptUser(itemOptions, (answer) => {
+    switch (answer) {
+      case '1':
+        stam = 65;
+        crime(nerve, stam, iso, icu, prison);
+        break;
+      case '2':
+        stam = 80;
+        crime(nerve, stam, iso, icu, prison);
+        break;
+      case '3':
+        stam = 10;
+        crime(nerve, stam, iso, icu, prison);
+        break;
+      case '4':
+        stam = 50;
+        crime(nerve, stam, iso, icu, prison);
+        break;
+      case '5':
+        stam = 70;
+        crime(nerve, stam, iso, icu, prison);
+        break;
+      default:
+        console.log('Invalid choice. Please choose a valid option.');
+        handleCrimeStamOptions(); 
+    }
+  });
+};
+
+const handleCrimeNerveOptions = () => {
+  const itemOptions = `Press '1' for Candy Corn (slot 3)\nPress '2' for Paddy's Pints (slot 3)\nPress '3' for Blunts (slot 2)\nPress '4' for Pink Eggs (slot 2)\n`;
+
+  promptUser(itemOptions, (answer) => {
+    switch (answer) {
+      case '1':
+        crime(nerve, stam, iso, icu, prison);
+        break;
+      case '2':
+        icu = true;
+        crime(nerve, stam, iso, icu, prison);
+        break;
+      case '3':
+        iso = true;
+        handleCrimeStamOptions();
+        break;
+      case '4':
+        handleCrimeStamOptions();
+        break;
+      default:
+        console.log('Invalid choice. Please choose a valid option.');
+        handleCrimeNerveOptions(); 
+    }
+  });
+};
+
+const handlePrisonOptions = () => {
     const crimeOptions = `Press '1' for Arbour Hill\nPress '2' for South Dakota\n`;
   
     promptUser(crimeOptions, (answer) => {
       switch (answer) {
         case '1':
-          console.log('Not yet!!!!');
-          handleCrimeOptions();
+          prison = "search-roof"
+          nerve = 100;
+          handleCrimeNerveOptions();
           break;
         case '2':
-          southDakotaCrime(); 
+          prison = "steal-weapon"
+          nerve = 20;
+          handleCrimeNerveOptions(); 
           break;
         default:
           console.log('Invalid choice. Please choose a valid option.');
-          handleCrimeOptions(); 
+          handlePrisonOptions(); 
       }
     });
 };
@@ -94,13 +158,10 @@ const handleMainOptions = () => {
   promptUser(mainOptions, (answer) => {
     switch (answer) {
       case '1':
-        train = true;
         handleTrainOptions();
         break;
       case '2':
-        crime = true;
-        console.log('Crime chosen');
-        handleCrimeOptions();
+        handlePrisonOptions();
         break;
       default:
         console.log('Invalid choice. Please choose a valid option.');
@@ -109,6 +170,4 @@ const handleMainOptions = () => {
   });
 };
 
-
 handleMainOptions();
-
