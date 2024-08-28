@@ -32,13 +32,13 @@ const handleTrainOptions = async () => {
   promptUser(statOptions, async (answer) => {
     switch (answer) {
       case '1':
-        stat = 4;
+        stat = '4';
         break;
       case '2':
-        stat = 6;
+        stat = '6';
         break;
       case '3':
-        stat = 5;
+        stat = '5';
         break;
       default:
         console.log('Invalid choice. Please choose a valid option.');
