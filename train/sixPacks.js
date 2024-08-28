@@ -53,8 +53,6 @@ async function sixPacksLogic(){
       try {
         await page.waitForSelector('.siteMessage', { visible: true });
         const messageText = await page.$eval('.siteMessage', el => el.textContent.trim());
-
-        //Water poisoning and brain freeze. Genius
       
         if (messageText.includes(messageText.includes('You can not use items') || 'Water poisoning and brain freeze. Genius')) {
           console.log(messageText);
@@ -70,8 +68,8 @@ async function sixPacksLogic(){
         console.error("The siteMessage element was not found or another error occurred:", error);
       }
 
-      await page.waitForSelector('form:nth-child(5) .widebutton', { visible: true });
-      await page.click('form:nth-child(4) .widebutton');
+      await page.waitForSelector(`form:nth-child(${stat}) .widebutton`, { visible: true });
+      await page.click(`form:nth-child(${stat}) .widebutton`);
     }
   })();
 }

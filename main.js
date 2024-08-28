@@ -4,6 +4,7 @@ const redbullLargeWaterLogic = require('./train/rblw');
 const southDakotaCrime = require('./crimeSD/bluntLw');
 const sixPacksLogic = require('./train/sixPacks');
 const paddysPintsLogic = require('./train/pp');
+const greenEggLargeWaterLogic = require('./train/greenEggLw');
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -20,29 +21,53 @@ const promptUser = (question, callback) => {
 };
 
 const handleTrainOptions = async () => {
-  const trainOptions = `Press '1' for Candy Corn\nPress '2' for Paddy's Pints\nPress '3' for Red bull & Large Water\nPress '4' for 6 packs\n`;
+  const trainOptions = `Press '1' for Candy Corn (slot 3)\nPress '2' for Paddy's Pints (slot 3)\nPress '3' for Red bull & Large Water (rb: 2, lw:3)\nPress '4' for 6 packs (slot 2 & 3)\nPress '5' for Green Eggs & Large Water (Egg: 2, Water: 3)\n`;
+  const statOptions = `Press '1' for Strength\nPress '2' for Defence\nPress '3' for Speed\n`;
 
-  promptUser(trainOptions, async (answer) => {
+  let stat;
+
+  promptUser(statOptions, async (answer) => {
     switch (answer) {
       case '1':
-        candyCornLogic();
+        stat = 4;
         break;
       case '2':
-        paddysPintsLogic();
+        stat = 6;
         break;
       case '3':
-        redbullLargeWaterLogic();
-        break;
-      case '4':
-        sixPacksLogic();
+        stat = 5;
         break;
       default:
         console.log('Invalid choice. Please choose a valid option.');
         handleTrainOptions();
         return;
     }
+
+    promptUser(trainOptions, async (answer) => {
+      switch (answer) {
+        case '1':
+          candyCornLogic(stat);
+          break;
+        case '2':
+          paddysPintsLogic(stat);
+          break;
+        case '3':
+          redbullLargeWaterLogic(stat);
+          break;
+        case '4':
+          sixPacksLogic(stat);
+          break;
+        case '5':
+          greenEggLargeWaterLogic(stat);
+          break;
+        default:
+          console.log('Invalid choice. Please choose a valid option.');
+          handleTrainOptions();
+          return;
+      }
+    });
   });
-};
+}
 
 const handleCrimeOptions = () => {
     const crimeOptions = `Press '1' for Arbour Hill\nPress '2' for South Dakota\n`;
@@ -54,8 +79,7 @@ const handleCrimeOptions = () => {
           handleCrimeOptions();
           break;
         case '2':
-          console.log("South Dakota");
-          confirmStaminaNerveItems();
+          southDakotaCrime(); 
           break;
         default:
           console.log('Invalid choice. Please choose a valid option.');
@@ -64,37 +88,8 @@ const handleCrimeOptions = () => {
     });
 };
 
-const confirmEnergyStaminaItems = () => {
-    return new Promise((resolve) => {
-      rl.question("Please confirm stamina item in quickslot 2 & energy item in quickslot 3? 'Y' or 'No':", (answer) => {
-        if (answer === 'N' || answer === 'n') {
-          confirmEnergyStaminaItems().then(resolve); 
-        } else if (answer === 'Y' || answer === 'y') {
-          resolve(true);
-        } else {
-          console.log('Invalid input. Please enter Y or N.');
-          confirmEnergyStaminaItems().then(resolve); 
-        }
-      });
-    });
-};
-  
-const confirmStaminaNerveItems = () => {
-    rl.question("Please confirm stamina item in quickslot 2 & nerve item in quickslot 3? 'Y' or 'No':", (answer) => {
-        if (answer === 'N' || answer === 'n') {
-        confirmStaminaNerveItems(); 
-        } else if (answer === 'Y' || answer === 'y') {
-        southDakotaCrime(); 
-        rl.close();
-        } else {
-        console.log('Invalid input. Please enter Y or N.');
-        confirmStaminaNerveItems(); 
-        }
-    });
-};
-
 const handleMainOptions = () => {
-  const mainOptions = `Press '1' to Train\nPress '2' to Crime\nPress '3' to Return to Main Menu\n`;
+  const mainOptions = `Press '1' to Train\nPress '2' to Crime\n`;
 
   promptUser(mainOptions, (answer) => {
     switch (answer) {
@@ -106,9 +101,6 @@ const handleMainOptions = () => {
         crime = true;
         console.log('Crime chosen');
         handleCrimeOptions();
-        break;
-      case '3':
-        start();
         break;
       default:
         console.log('Invalid choice. Please choose a valid option.');
