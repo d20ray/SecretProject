@@ -24,8 +24,8 @@ const promptUser = (question, callback) => {
 };
 
 const handleTrainOptions = async () => {
-  const statOptions = `Press '1' for Strength\nPress '2' for Defence\nPress '3' for Speed\n`;
-  const trainOptions = `Press '1' for Candy Corn (slot 3)\nPress '2' for Paddy's Pints (slot 3)\nPress '3' for Red bull & Large Water (rb: 2, lw:3)\nPress '4' for 6 packs (slot 2 & 3)\nPress '5' for Green Eggs & Large Water (egg: 2, lw: 3)\n`;
+  const statOptions = `Press '1' for Strength\nPress '2' for Defence\nPress '3' for Speed\nPress '0' for Main Menu\n`;
+  const trainOptions = `Press '1' for Candy Corn (slot 3)\nPress '2' for Paddy's Pints (slot 3)\nPress '3' for Red bull & Large Water (rb: 2, lw:3)\nPress '4' for 6 packs (slot 2 & 3)\nPress '5' for Green Eggs & Large Water (egg: 2, lw: 3)\nPress '0' for Main Menu\n`;
 
   let stat;
 
@@ -39,6 +39,9 @@ const handleTrainOptions = async () => {
         break;
       case '3':
         stat = '5';
+        break;
+      case '0':
+        handleMainOptions();
         break;
       default:
         console.log('Invalid choice. Please choose a valid option.');
@@ -63,6 +66,9 @@ const handleTrainOptions = async () => {
         case '5':
           greenEggLargeWaterLogic(stat);
           break;
+        case '0':
+          handleMainOptions();
+          break;
         default:
           console.log('Invalid choice. Please choose a valid option.');
           handleTrainOptions();
@@ -73,7 +79,7 @@ const handleTrainOptions = async () => {
 }
 
 const handleCrimeStamOptions = () => {
-  const itemOptions = `Press '1' for Large Water (slot 3)\nPress '2' for Small Water (slot 3)\nPress '3' for 100% stamina item (slot 3)\nPress '4' for 50% stamina item (slot 3)\nPress '5' for 30% stamina item (slot 3)\n`;
+  const itemOptions = `Press '1' for Large Water (slot 3)\nPress '2' for Small Water (slot 3)\nPress '3' for 100% stamina item (slot 3)\nPress '4' for 50% stamina item (slot 3)\nPress '5' for 30% stamina item (slot 3)\nPress '0' for Main Menu\n`;
 
   promptUser(itemOptions, (answer) => {
     switch (answer) {
@@ -97,6 +103,9 @@ const handleCrimeStamOptions = () => {
         stam = 70;
         crime(nerve, stam, iso, icu, prison);
         break;
+      case '0':
+        handleMainOptions();
+        break;
       default:
         console.log('Invalid choice. Please choose a valid option.');
         handleCrimeStamOptions(); 
@@ -105,7 +114,7 @@ const handleCrimeStamOptions = () => {
 };
 
 const handleCrimeNerveOptions = () => {
-  const itemOptions = `Press '1' for Candy Corn (slot 3)\nPress '2' for Paddy's Pints (slot 3)\nPress '3' for Blunts (slot 2)\nPress '4' for Pink Eggs (slot 2)\n`;
+  const itemOptions = `Press '1' for Candy Corn (slot 3)\nPress '2' for Paddy's Pints (slot 3)\nPress '3' for Blunts (slot 2)\nPress '4' for Pink Eggs (slot 2)\nPress '0' for Main Menu\n`;
 
   promptUser(itemOptions, (answer) => {
     switch (answer) {
@@ -123,6 +132,9 @@ const handleCrimeNerveOptions = () => {
       case '4':
         handleCrimeStamOptions();
         break;
+      case '0':
+        handleMainOptions();
+        break;
       default:
         console.log('Invalid choice. Please choose a valid option.');
         handleCrimeNerveOptions(); 
@@ -131,7 +143,7 @@ const handleCrimeNerveOptions = () => {
 };
 
 const handlePrisonOptions = () => {
-    const crimeOptions = `Press '1' for Arbour Hill\nPress '2' for South Dakota\n`;
+    const crimeOptions = `Press '1' for Arbour Hill\nPress '2' for South Dakota\nPress '0' for Main Menu\n`;
   
     promptUser(crimeOptions, (answer) => {
       switch (answer) {
@@ -144,6 +156,9 @@ const handlePrisonOptions = () => {
           prison = "steal-weapon"
           nerve = 20;
           handleCrimeNerveOptions(); 
+          break;
+        case '0':
+          handleMainOptions();
           break;
         default:
           console.log('Invalid choice. Please choose a valid option.');

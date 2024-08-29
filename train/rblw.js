@@ -15,7 +15,11 @@ async function redbullLargeWaterLogic(stat){
     await page.goto('https://www.prisonblock.com/gym');
 
     const times = 1000;
+    
     for (let i = 0; i < times; i++) {
+
+      // const delay = Math.floor(Math.random() * 6000);
+      // await new Promise(resolve => setTimeout(resolve, delay));
 
       await page.waitForSelector('#um_mail');
 

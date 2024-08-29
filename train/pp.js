@@ -14,8 +14,18 @@ async function paddysPintsLogic(stat){
 
     await page.goto('https://www.prisonblock.com/gym');
 
-    const times = 1000;
+    // const times = 1000;
+    // let crawdad = 0;
     for (let i = 0; i < times; i++) {
+
+      // crawdad = crawdad + 1;
+      // if(crawdad === 7){
+      //   await page.waitForSelector('.quickslot:nth-child(2) input:nth-child(1)', { visible: true });
+      //   await page.click('.quickslot:nth-child(2) input:nth-child(1)');
+      //   crawdad = 0;
+      // }
+
+      console.log(crawdad);
 
       await page.waitForSelector('#um_mail');
 
