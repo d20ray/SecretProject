@@ -3,7 +3,7 @@ const fs = require("fs");
 const player = require('play-sound')(opts = {});
 
 
-async function paddysPintsLogic(){
+async function paddysPintsLogic(stat){
   (async () => {
     const browser = await puppeteer.launch({ 
       headless: false, 
