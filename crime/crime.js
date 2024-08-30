@@ -17,7 +17,7 @@ function crime(nerve, stam, iso, icu, prison){
         await page.waitForSelector('.g-recaptcha', { visible: true });
         await page.click('.g-recaptcha'); 
     
-        for (var i=0; i<1000; i++){
+        for (var i=0; i<10000; i++){
     
             await page.waitForSelector('#um_mail');
             const mailCount = await page.$eval('#um_mail', el => el.textContent.trim());
