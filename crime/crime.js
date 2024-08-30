@@ -85,7 +85,26 @@ function crime(nerve, stam, iso, icu, prison){
             }
     
             await page.waitForSelector('.g-recaptcha', { visible: true });
-            await page.click('.g-recaptcha'); 
+            await page.click('.g-recaptcha');
+
+            await page.waitForSelector('.siteMessage', { visible: true });
+            const messageText = await page.$eval('.siteMessage', el => el.textContent.trim());
+    
+            try {
+                if (messageText.includes('bribed your way out of isolation') || messageText.includes('usted a guard') || messageText.includes('re in isolation for an')) {
+                    console.log(messageText);
+                    await page.waitForSelector('.menu');
+                    await page.goto(`https://www.prisonblock.com/crimes/${prison}`);
+                    await page.waitForSelector('.g-recaptcha', { visible: true });
+                    await page.click('.g-recaptcha'); 
+                } else {
+                    console.log(messageText);
+            }
+            } catch (error) {
+            console.error("The siteMessage element was not found or another error occurred:", error);
+            }
+
+            
         }
     
     })();
