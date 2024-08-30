@@ -42,7 +42,7 @@ function crime(nerve, stam, iso, icu, prison){
             const nerveText = await page.evaluate(element => element.textContent.trim(), nerveElement); 
             const nerveValue = parseInt(nerveText.split('/')[0], 10);
     
-            if (nerveValue < nerve){
+            if (nerveValue < nerve && nerveValue !== 1){
                 await page.waitForSelector('.quickslot:nth-child(2) input:nth-child(1)', { visible: true });
                 await page.click('.quickslot:nth-child(2) input:nth-child(1)');
             }
@@ -52,7 +52,7 @@ function crime(nerve, stam, iso, icu, prison){
                 const messageText = await page.$eval('.siteMessage', el => el.textContent.trim());
         
                 try {
-                    if (messageText.includes('bribed your way out of isolation')) {
+                    if (messageText.includes('bribed your way out of isolation') || messageText.includes(`uard caught you smokin`)) {
                         console.log(messageText);
                         await page.waitForSelector('.menu');
                         await page.goto(`https://www.prisonblock.com/crimes/${prison}`);
