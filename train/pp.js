@@ -14,7 +14,7 @@ async function paddysPintsLogic(stat){
 
     await page.goto('https://www.prisonblock.com/gym');
 
-    // const times = 1000;
+    const times = 10000;
     // let crawdad = 0;
     for (let i = 0; i < times; i++) {
 
@@ -25,7 +25,7 @@ async function paddysPintsLogic(stat){
       //   crawdad = 0;
       // }
 
-      console.log(crawdad);
+      // console.log(crawdad);
 
       await page.waitForSelector('#um_mail');
 
