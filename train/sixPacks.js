@@ -3,7 +3,7 @@ const fs = require("fs");
 const player = require('play-sound')(opts = {});
 
 
-async function sixPacksLogic(){
+async function sixPacksLogic(stat){
   (async () => {
     const browser = await puppeteer.launch({ 
       headless: false, 

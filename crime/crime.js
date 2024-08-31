@@ -18,6 +18,9 @@ function crime(nerve, stam, iso, icu, prison){
         await page.click('.g-recaptcha'); 
     
         for (var i=0; i<10000; i++){
+
+            // const delay = Math.floor(Math.random() * 9000);
+            // await new Promise(resolve => setTimeout(resolve, delay));
     
             await page.waitForSelector('#um_mail');
             const mailCount = await page.$eval('#um_mail', el => el.textContent.trim());
