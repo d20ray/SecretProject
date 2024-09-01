@@ -15,7 +15,7 @@ async function redbullLargeWaterLogic(stat){
 
     await page.goto('https://www.prisonblock.com/gym');
 
-    const times = 1000;
+    const times = 10000;
     
     for (let i = 0; i < times; i++) {
 
