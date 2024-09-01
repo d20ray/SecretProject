@@ -11,6 +11,7 @@ async function redbullLargeWaterLogic(stat){
       userDataDir: "./tmp", });
 
     const page = await browser.newPage();
+    const client = await page.target().createCDPSession();
 
     await page.goto('https://www.prisonblock.com/gym');
 
@@ -20,6 +21,16 @@ async function redbullLargeWaterLogic(stat){
 
       // const delay = Math.floor(Math.random() * 6000);
       // await new Promise(resolve => setTimeout(resolve, delay));
+
+      const cookies = await client.send('Network.getAllCookies');
+      const keepCookies = ['pbpid', 'lastuser'];
+      const cookiesToKeep = cookies.cookies.filter(cookie => 
+          keepCookies.includes(cookie.name) && cookie.domain.includes('prisonblock.com')
+      );
+      await client.send('Network.clearBrowserCookies');
+      for (let cookie of cookiesToKeep) {
+          await client.send('Network.setCookie', cookie);
+      }
 
       await page.waitForSelector('#um_mail');
 

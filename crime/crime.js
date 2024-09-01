@@ -11,6 +11,7 @@ function crime(nerve, stam, iso, icu, prison){
         });
     
         const page = await browser.newPage();
+        const client = await page.target().createCDPSession();
     
         await page.goto(`https://www.prisonblock.com/crimes/${prison}`);
 
@@ -21,6 +22,16 @@ function crime(nerve, stam, iso, icu, prison){
 
             // const delay = Math.floor(Math.random() * 9000);
             // await new Promise(resolve => setTimeout(resolve, delay));
+
+            const cookies = await client.send('Network.getAllCookies');
+            const keepCookies = ['pbpid', 'lastuser'];
+            const cookiesToKeep = cookies.cookies.filter(cookie => 
+                keepCookies.includes(cookie.name) && cookie.domain.includes('prisonblock.com')
+            );
+            await client.send('Network.clearBrowserCookies');
+            for (let cookie of cookiesToKeep) {
+                await client.send('Network.setCookie', cookie);
+            }
     
             await page.waitForSelector('#um_mail');
             const mailCount = await page.$eval('#um_mail', el => el.textContent.trim());

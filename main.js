@@ -5,6 +5,7 @@ const crime = require('./crime/crime');
 const sixPacksLogic = require('./train/sixPacks');
 const paddysPintsLogic = require('./train/pp');
 const greenEggLargeWaterLogic = require('./train/greenEggLw');
+// const mug = require('./mug/mug');
 
 let nerve = 0;
 let stam = 0;
