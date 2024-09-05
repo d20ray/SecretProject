@@ -16,7 +16,7 @@ async function paddysPintsLogic(stat){
     await page.goto('https://www.prisonblock.com/gym');
 
     const times = 10000;
-    // let crawdad = 0;
+    let crawdad = 0;
     for (let i = 0; i < times; i++) {
 
       const cookies = await client.send('Network.getAllCookies');
@@ -29,14 +29,12 @@ async function paddysPintsLogic(stat){
           await client.send('Network.setCookie', cookie);
       }
 
-      // crawdad = crawdad + 1;
-      // if(crawdad === 7){
-      //   await page.waitForSelector('.quickslot:nth-child(2) input:nth-child(1)', { visible: true });
-      //   await page.click('.quickslot:nth-child(2) input:nth-child(1)');
-      //   crawdad = 0;
-      // }
-
-      // console.log(crawdad);
+      crawdad = crawdad + 1;
+      if(crawdad === 4){
+        await page.waitForSelector('.quickslot:nth-child(2) input:nth-child(1)', { visible: true });
+        await page.click('.quickslot:nth-child(2) input:nth-child(1)');
+        crawdad = 0;
+      }
 
       await page.waitForSelector('#um_mail');
 
