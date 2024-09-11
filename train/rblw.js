@@ -48,7 +48,7 @@ async function redbullLargeWaterLogic(stat){
         await page.waitForSelector('.siteMessage', { visible: true });
         const messageText = await page.$eval('.siteMessage', el => el.textContent.trim());
       
-        if (messageText.includes('You can not use items') || messageText.includes('You nearly have a stroke')) {
+        if (messageText.includes('You can not use items') || messageText.includes('You nearly have a stroke') || messageText.includes("You can't handle this raw shit!")) {
           console.log(messageText);
           await page.goto('https://www.prisonblock.com/icu');
           await page.waitForSelector('.g-recaptcha', { visible: true });
