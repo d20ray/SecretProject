@@ -29,12 +29,12 @@ async function paddysPintsLogic(stat){
           await client.send('Network.setCookie', cookie);
       }
 
-      crawdad = crawdad + 1;
-      if(crawdad === 4){
-        await page.waitForSelector('.quickslot:nth-child(2) input:nth-child(1)', { visible: true });
-        await page.click('.quickslot:nth-child(2) input:nth-child(1)');
-        crawdad = 0;
-      }
+      // crawdad = crawdad + 1;
+      // if(crawdad === 32){
+      //   await page.waitForSelector('.quickslot:nth-child(2) input:nth-child(1)', { visible: true });
+      //   await page.click('.quickslot:nth-child(2) input:nth-child(1)');
+      //   crawdad = 0;
+      // }
 
       await page.waitForSelector('#um_mail');
 
@@ -52,7 +52,7 @@ async function paddysPintsLogic(stat){
         await page.waitForSelector('.siteMessage', { visible: true });
         const messageText = await page.$eval('.siteMessage', el => el.textContent.trim());
       
-        if (messageText.includes('You can not use items') || messageText.includes('Lightweight! This shit is too much for you!') || messageText.includes('Damn, that shit was potent!')) {
+        if (messageText.includes('You can not use items') || messageText.includes('You chug until') || messageText.includes('Lightweight! This shit is too much for you!') || messageText.includes('Damn, that shit was potent!')) {
           console.log(messageText);
           await page.goto('https://www.prisonblock.com/icu');
           await page.waitForSelector('.g-recaptcha', { visible: true });
