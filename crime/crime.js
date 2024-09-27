@@ -2,6 +2,8 @@ const puppeteer = require('puppeteer');
 const fs = require("fs");
 const player = require('play-sound')(opts = {});
 
+let initialTime = new Date();
+
 function crime(nerve, stam, iso, icu, prison){
     (async () => {
         const browser = await puppeteer.launch({ 
@@ -11,6 +13,7 @@ function crime(nerve, stam, iso, icu, prison){
         });
     
         const page = await browser.newPage();
+        const client = await page.target().createCDPSession();
     
         await page.goto(`https://www.prisonblock.com/crimes/${prison}`);
 
@@ -18,7 +21,27 @@ function crime(nerve, stam, iso, icu, prison){
         await page.click('.g-recaptcha'); 
     
         for (var i=0; i<10000; i++){
-    
+
+            let currentTime = new Date();
+            const timeDifference = (currentTime - initialTime) / (1000 * 60);
+
+            if (timeDifference >= 0.35) {
+                const cookies = await client.send('Network.getAllCookies');
+                const keepCookies = ['pbpid', 'lastuser'];
+                const cookiesToKeep = cookies.cookies.filter(cookie => 
+                    keepCookies.includes(cookie.name) && cookie.domain.includes('prisonblock.com')
+                );
+                await client.send('Network.clearBrowserCookies');
+                for (let cookie of cookiesToKeep) {
+                    await client.send('Network.setCookie', cookie);
+                }
+                console.log("Cookie updated :)"); 
+                initialTime = new Date();
+                await page.goto(`https://www.prisonblock.com/crimes/${prison}`);
+                await page.waitForSelector('.g-recaptcha', { visible: true });
+                await page.click('.g-recaptcha'); 
+            }
+
             await page.waitForSelector('#um_mail');
             const mailCount = await page.$eval('#um_mail', el => el.textContent.trim());
             const eventCount = await page.$eval('#um_events', el => el.textContent.trim());
@@ -70,12 +93,11 @@ function crime(nerve, stam, iso, icu, prison){
                     const messageText = await page.$eval('.siteMessage', el => el.textContent.trim());
                   
                     if (messageText.includes('You can not use items') || messageText.includes('eight! This shit is too much for you')) {
-                      console.log(messageText);
-                      await page.goto('https://www.prisonblock.com/icu');
-                      await page.waitForSelector('.g-recaptcha', { visible: true });
-                      await page.click('.g-recaptcha'); 
-                      await page.waitForSelector('.menu');
-                      await page.goto(`https://www.prisonblock.com/crimes/${prison}`);
+                        console.log(messageText);
+                        await page.waitForSelector('.g-recaptcha', { visible: true });
+                        await page.click('.g-recaptcha'); 
+                        await page.waitForSelector('.menu');
+                        await page.goto(`https://www.prisonblock.com/crimes/${prison}`);
                     } else {
                       console.log(messageText);
                     }
