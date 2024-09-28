@@ -63,9 +63,9 @@ function crime(nerve, stam, iso, icu, prison){
     
             const nerveElement = await page.waitForSelector('#um_nerve'); 
             const nerveText = await page.evaluate(element => element.textContent.trim(), nerveElement); 
-            const nerveValue = parseInt(nerveText.split('/')[0], 10);
+            const nerveValue = parseInt(nerveText.replace(/,/g, ''), 10);
     
-            if (nerveValue < nerve && nerveValue !== 1){
+            if (nerveValue < nerve){
                 await page.waitForSelector('.quickslot:nth-child(2) input:nth-child(1)', { visible: true });
                 await page.click('.quickslot:nth-child(2) input:nth-child(1)');
             }
