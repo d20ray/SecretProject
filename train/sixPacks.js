@@ -31,8 +31,8 @@ async function sixPacksLogic(stat){
 
       crawdad = crawdad + 1;
       if(crawdad === 5){
-        await page.waitForSelector('.quickslot:nth-child(2) input:nth-child(1)', { visible: true });
-        await page.click('.quickslot:nth-child(2) input:nth-child(1)');
+        await page.waitForSelector('.quickslot:nth-child(1) input:nth-child(1)', { visible: true });
+        await page.click('.quickslot:nth-child(1) input:nth-child(1)');
         crawdad = 0;
       }
 
