@@ -15,6 +15,7 @@ async function sixPacksLogic(stat){
 
     await page.goto('https://www.prisonblock.com/gym');
 
+    let crawdad = 0;
     const times = 10000;
     for (let i = 0; i < times; i++) {
 
@@ -26,6 +27,13 @@ async function sixPacksLogic(stat){
       await client.send('Network.clearBrowserCookies');
       for (let cookie of cookiesToKeep) {
           await client.send('Network.setCookie', cookie);
+      }
+
+      crawdad = crawdad + 1;
+      if(crawdad === 5){
+        await page.waitForSelector('.quickslot:nth-child(2) input:nth-child(1)', { visible: true });
+        await page.click('.quickslot:nth-child(2) input:nth-child(1)');
+        crawdad = 0;
       }
 
       await page.waitForSelector('#um_mail');
