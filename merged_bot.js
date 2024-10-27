@@ -1,7 +1,7 @@
 const puppeteer = require('puppeteer-extra');
 const fs = require("fs");
 
-const inmates = ['JPistolino', 'pistol22', 'KingDraco', 'AvengerNKJ', 'DR_FiSh', 'bigboss1', 'V12DaBully', 'Slumpz', 'Jbunnz', 'MASHUP', 'HeartBreaker831', 'Slumpz', 'Chilla', 'BigWheel', 'Sun_Tzu', 
+const inmates = ['AvengerNKJ', 'DR_FiSh', 'bigboss1', 'V12DaBully', 'pistol22',  'Slumpz', 'Jbunnz', 'MASHUP', 'HeartBreaker831', 'Slumpz', 'Chilla', 'BigWheel', 'Sun_Tzu', 
     'JazzieDaGrinch', 'Spinelli', 'Incognita'];
 
 let initialTime = new Date();
@@ -17,7 +17,7 @@ async function mug(page, client) {
 
     initialTime = new Date();
 
-    if (nerveValue >= (inmates.length * 20)) {
+    if (nerveValue >= 100) {
         for (let i = 0; i < inmates.length; i++) {
 
             const cookies = await client.send('Network.getAllCookies');
