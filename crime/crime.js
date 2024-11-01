@@ -68,6 +68,8 @@ function crime(nerve, stam, iso, icu, prison){
             if (nerveValue < nerve){
                 await page.waitForSelector('.quickslot:nth-child(2) input:nth-child(1)', { visible: true });
                 await page.click('.quickslot:nth-child(2) input:nth-child(1)');
+                await page.waitForSelector('.quickslot:nth-child(2) input:nth-child(1)', { visible: true });
+                await page.click('.quickslot:nth-child(2) input:nth-child(1)');
             }
 
             if(iso){
