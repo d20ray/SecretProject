@@ -1,5 +1,6 @@
 const readline = require('readline');
 const candyCornLogic = require('./train/cc');
+const lollipopLogic = require('./train/lollipop');
 const redbullLargeWaterLogic = require('./train/rblw');
 const crime = require('./crime/crime');
 const sixPacksLogic = require('./train/sixPacks');
@@ -26,7 +27,7 @@ const promptUser = (question, callback) => {
 
 const handleTrainOptions = async () => {
   const statOptions = `Press '1' for Strength\nPress '2' for Defence\nPress '3' for Speed\nPress '0' for Main Menu\n`;
-  const trainOptions = `Press '1' for Candy Corn (slot 3)\nPress '2' for Paddy's Pints (slot 3)\nPress '3' for Red bull & Large Water (rb: 2, lw:3)\nPress '4' for 6 packs (slot 2 & 3)\nPress '5' for Green Eggs & Large Water (egg: 2, lw: 3)\nPress '0' for Main Menu\n`;
+  const trainOptions = `Press '1' for Candy Corn (slot 3)\nPress '2' for Paddy's Pints (slot 3)\nPress '3' for Red bull & Large Water (rb: 2, lw:3)\nPress '4' for 6 packs (slot 2 & 3)\nPress '5' for Green Eggs & Large Water (egg: 2, lw: 3)\nPress '6' for Lollipops & Large Water (lp: 2, lw: 3)\nPress '0' for Main Menu\n`;
 
   let stat;
 
@@ -66,6 +67,9 @@ const handleTrainOptions = async () => {
           break;
         case '5':
           greenEggLargeWaterLogic(stat);
+          break;
+        case '6':
+          lollipopLogic(stat);
           break;
         case '0':
           handleMainOptions();
